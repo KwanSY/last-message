@@ -5,6 +5,8 @@
 class ModuleAController {
   constructor() {
     this.screenEl = document.getElementById('crtScreen');
+    this.fullscreenOverlay = document.getElementById('fullscreenOverlay');
+    this.fullscreenContent = document.getElementById('fullscreenContent');
     this.data = window.MODULE_A_DATA;
     this.currentAct = -1;
     this.userCategory = "咨询类";
@@ -32,25 +34,27 @@ class ModuleAController {
     window.addEventListener('keydown', unlockAudio, { once: true });
   }
 
-  // Set display mode: 'mode-fullscreen' or 'mode-system'
-  setDisplayMode(mode) {
-    document.body.className = mode;
-  }
-
-  // Helper to clear screen content
-  clearScreen() {
+  // Clear in-monitor CRT screen
+  clearMonitorScreen() {
     this.screenEl.innerHTML = '';
     this.screenEl.className = 'crt-screen';
   }
 
+  // Clear fullscreen overlay
+  clearFullscreen() {
+    this.fullscreenContent.innerHTML = '';
+    this.fullscreenContent.className = 'fullscreen-screen-content';
+  }
+
   // =========================================================================
-  // Act 0: 黑屏来电 (~4s, 全幅黑场)
+  // Act 0: 黑屏来电 (~4s, 全幅纯黑)
   // =========================================================================
   startAct0() {
     this.currentAct = 0;
-    this.setDisplayMode('mode-fullscreen');
-    this.clearScreen();
-    this.screenEl.classList.add('crt-black-breathing');
+    this.clearFullscreen();
+    this.clearMonitorScreen();
+    this.fullscreenOverlay.classList.add('active');
+    this.fullscreenContent.classList.add('crt-black-breathing');
 
     // Phone rings twice in ~4 seconds
     setTimeout(() => window.soundEngine.playPhoneRing(), 400);
@@ -68,20 +72,20 @@ class ModuleAController {
   // =========================================================================
   startAct1() {
     this.currentAct = 1;
-    this.setDisplayMode('mode-fullscreen');
-    this.clearScreen();
-    this.screenEl.classList.add('crt-black-breathing');
+    this.clearFullscreen();
+    this.fullscreenOverlay.classList.add('active');
+    this.fullscreenContent.classList.add('crt-black-breathing');
 
     // 1. Top Right Recording Indicator
     const recIndicator = document.createElement('div');
     recIndicator.className = 'act1-recording-indicator';
     recIndicator.innerHTML = '线路 03 · 录音中 <span class="red-dot"></span>';
-    this.screenEl.appendChild(recIndicator);
+    this.fullscreenContent.appendChild(recIndicator);
 
     // 2. Subtitles Container
     const subtitleContainer = document.createElement('div');
     subtitleContainer.className = 'act1-subtitles-container';
-    this.screenEl.appendChild(subtitleContainer);
+    this.fullscreenContent.appendChild(subtitleContainer);
 
     const lines = this.data.act1.lines;
 
@@ -119,34 +123,32 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 2: 挂断与开机转场 (~6-8s, 顺畅过渡到派出所电脑)
+  // Act 2: 挂断与开机转场 (自然过渡到值班室 -> 电脑开机 -> 完整大表单)
   // =========================================================================
   startAct2() {
     this.currentAct = 2;
-    this.clearScreen();
+
+    // 1. Smoothly fade out fullscreen black layer, revealing the quiet duty room desk
+    this.fullscreenOverlay.classList.remove('active');
+    this.clearMonitorScreen();
     this.screenEl.style.backgroundColor = '#000000';
 
-    // Black screen silence after busy tone
+    // 2. Brief pause in quiet duty room
     setTimeout(() => {
-      // 1. Smooth transition into Police Station Desk View
-      this.setDisplayMode('mode-system');
+      // 3. CRT hardware turn-on simulation
+      window.soundEngine.playCRTTurnOn();
+      this.renderAct3Form();
+      this.screenEl.classList.add('crt-booting');
 
-      // 2. Brief 0.6s pause, then CRT hardware turn-on
       setTimeout(() => {
-        window.soundEngine.playCRTTurnOn();
-        this.renderAct3Form();
-        this.screenEl.classList.add('crt-booting');
-
-        setTimeout(() => {
-          this.screenEl.classList.remove('crt-booting');
-          this.bindAct3Interactions();
-        }, 1800);
-      }, 600);
-    }, 1800);
+        this.screenEl.classList.remove('crt-booting');
+        this.bindAct3Interactions();
+      }, 1600);
+    }, 1000);
   }
 
   // =========================================================================
-  // Act 3: 接警单 (核心交互幕)
+  // Act 3: 接警单 (核心交互幕 - 清晰完整呈现)
   // =========================================================================
   renderAct3Form() {
     this.currentAct = 3;
@@ -208,7 +210,7 @@ class ModuleAController {
             </select>
 
             <div class="form-label">处理结果：</div>
-            <input type="text" id="act3ResultInput" class="form-input-locked font-system" value="" readonly tabindex="-1" placeholder="根据分类自动带出" />
+            <input type="text" id="act3ResultInput" class="form-input-locked font-system" value="" readonly tabindex="-1" placeholder="自动带出" />
           </div>
 
           <div class="form-toolbar">
@@ -234,7 +236,7 @@ class ModuleAController {
       window.soundEngine.playKeyClick();
     });
 
-    // Category change logic: Regardless of which option is chosen, auto-fill "无实质警情" (locked/read-only)
+    // Category change logic: Any selection automatically populates "无实质警情" (locked/read-only)
     categorySelect.addEventListener('change', () => {
       window.soundEngine.playButtonClick();
       const val = categorySelect.value;
@@ -269,10 +271,10 @@ class ModuleAController {
       detailText.readOnly = true;
       categorySelect.disabled = true;
 
-      // Lingers briefly, then screen dims into Act 4
+      // Lingers briefly, then screen dims into in-monitor screensaver clock
       setTimeout(() => {
         this.startAct4();
-      }, 1600);
+      }, 1500);
     });
 
     // Default focus
@@ -280,12 +282,11 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 4: 待机大屏跳秒 (~7s, Fullscreen Clock)
+  // Act 4: 待机大屏跳秒 (~7s, 显示器内屏保)
   // =========================================================================
   startAct4() {
     this.currentAct = 4;
-    this.setDisplayMode('mode-fullscreen');
-    this.clearScreen();
+    this.clearMonitorScreen();
 
     const screensaver = document.createElement('div');
     screensaver.className = 'act4-screensaver night-mode';
@@ -308,11 +309,11 @@ class ModuleAController {
         window.soundEngine.playClockTick();
       } else {
         clearInterval(interval);
-        // Instant hard-cut invert to Day Mode (No transition, silent)
+        // Instant hard-cut invert to Day Mode inside monitor screen (No transition, silent)
         screensaver.className = 'act4-screensaver day-mode';
         clockDisplay.textContent = this.data.act4.dayTime;
 
-        // Hold on 8:00 AM, then transition into station background & boot simulation
+        // Hold on 8:00 AM, then simulate morning computer wake & popup case notice
         setTimeout(() => {
           this.startAct5();
         }, this.data.act4.dayHoldSec * 1000);
@@ -321,22 +322,19 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 5, 6, 7: 8点后切回派出所背景 -> 模拟电脑开机 -> 弹出案件通报
+  // Act 5, 6, 7: 8点后晨间电脑唤醒 -> 弹出案件通报
   // =========================================================================
   startAct5() {
     this.currentAct = 5;
-
-    // 1. Switch back to Police Station Desk View
-    this.setDisplayMode('mode-system');
-    this.clearScreen();
+    this.clearMonitorScreen();
     this.screenEl.style.backgroundColor = '#000000';
 
-    // 2. Simulate morning computer boot-up / wake-up
+    // Simulate morning computer wake-up / boot-up
     setTimeout(() => {
       window.soundEngine.playCRTTurnOn();
       this.screenEl.classList.add('crt-booting');
 
-      // Base system background
+      // Base system background window
       this.screenEl.innerHTML = `
         <div class="act3-window xp-bevel-window" style="opacity: 0.85;">
           <div class="xp-titlebar">
@@ -359,14 +357,14 @@ class ModuleAController {
       setTimeout(() => {
         this.screenEl.classList.remove('crt-booting');
 
-        // 3. System modal window pops up with click sound
+        // System modal window pops up with click sound
         setTimeout(() => {
           window.soundEngine.playButtonClick();
           this.renderNoticeModal();
-        }, 600);
+        }, 500);
 
       }, 1600);
-    }, 600);
+    }, 400);
   }
 
   renderNoticeModal() {
@@ -405,7 +403,7 @@ class ModuleAController {
 
           <!-- Act 7: Action Button -->
           <div class="act7-action-bar">
-            <button id="act7GoBtn" class="xp-bevel-button font-system" style="font-weight: bold; padding: 6px 28px;">【出现场】</button>
+            <button id="act7GoBtn" class="xp-bevel-button font-system" style="font-weight: bold; padding: 4px 24px;">【出现场】</button>
           </div>
         </div>
       </div>
@@ -429,34 +427,27 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 8: 标题落版 (~9s, Fullscreen Title Drop)
+  // Act 8: 标题落版 (~9s, 全屏黑场标题浮出)
   // =========================================================================
   startAct8() {
     this.currentAct = 8;
+    this.clearFullscreen();
 
-    // 1. Slow even dimming (~2.5s, duty room light turns off)
-    this.screenEl.classList.add('dimming-to-night');
+    // Smoothly fade in fullscreen black overlay (like lights turning off in duty room)
+    this.fullscreenOverlay.classList.add('active');
+
+    const titleScreen = document.createElement('div');
+    titleScreen.className = 'act8-title-screen';
+    this.fullscreenContent.appendChild(titleScreen);
+
+    titleScreen.innerHTML = `
+      <div class="act8-main-title">${this.data.act8.title}</div>
+      <div class="act8-sub-id">${this.data.act8.recordId}</div>
+      <div class="module-b-transition-hint font-mono">[ 模块 A 体验结束 · 模块 B 待接入 ]</div>
+    `;
 
     setTimeout(() => {
-      this.setDisplayMode('mode-fullscreen');
-      this.clearScreen();
-      this.screenEl.style.backgroundColor = '#000000';
-      this.screenEl.classList.remove('dimming-to-night');
-
-      const titleScreen = document.createElement('div');
-      titleScreen.className = 'act8-title-screen';
-      this.screenEl.appendChild(titleScreen);
-
-      titleScreen.innerHTML = `
-        <div class="act8-main-title">${this.data.act8.title}</div>
-        <div class="act8-sub-id">${this.data.act8.recordId}</div>
-        <div class="module-b-transition-hint font-mono">[ 模块 A 体验结束 · 模块 B 待接入 ]</div>
-      `;
-
-      // Trigger fade in
-      void titleScreen.offsetWidth;
       titleScreen.classList.add('visible');
-
       setTimeout(() => {
         const mainTitle = document.querySelector('.act8-main-title');
         const subId = document.querySelector('.act8-sub-id');
@@ -464,9 +455,8 @@ class ModuleAController {
         if (mainTitle) mainTitle.classList.add('revealed');
         if (subId) subId.classList.add('revealed');
         if (hint) hint.classList.add('revealed');
-      }, 300);
-
-    }, this.data.act8.dimDurationSec * 1000);
+      }, 400);
+    }, 800);
   }
 }
 

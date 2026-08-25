@@ -11,21 +11,24 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Ambient Atmosphere Vignette -->
+  <!-- Ambient Room Vignette -->
   <div class="environment-overlay"></div>
 
-  <!-- 4:3 CRT Physical Monitor Enclosure -->
+  <!-- 4:3 Physical CRT Monitor Chassis Container -->
   <div class="crt-monitor-enclosure">
     <div class="crt-bezel">
-      <!-- CRT Screen Glass and Visual Shader Surface -->
+      <!-- Screen Glass Surface -->
       <div id="crtScreen" class="crt-screen crt-black-breathing"></div>
-
-      <!-- Realistic Glass Reflection Overlay -->
       <div class="crt-glass-reflection"></div>
     </div>
   </div>
 
-  <!-- Audio Context Activator Overlay (Discreet) -->
+  <!-- Fullscreen Narrative Layer (Act 0, Act 1, Act 8) -->
+  <div id="fullscreenOverlay" class="fullscreen-narrative-layer">
+    <div id="fullscreenContent" class="fullscreen-screen-content"></div>
+  </div>
+
+  <!-- Audio Context Activator -->
   <div id="audioOverlay" class="audio-init-overlay">
     <div class="audio-hint">[ 点击任意位置开启声音体验 ]</div>
   </div>

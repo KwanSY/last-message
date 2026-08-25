@@ -56,13 +56,16 @@
   border-right: 2px solid #404040;
   border-bottom: 2px solid #404040;
   box-shadow: inset 1px 1px #DFDFDF, inset -1px -1px #808080;
-  padding: 5px 22px;
+  padding: 4px 18px;
   font-family: "SimSun", "NSimSun", "宋体", sans-serif;
   font-size: 13px;
   cursor: pointer;
   outline: none;
   user-select: none;
   box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .xp-bevel-button:active:not(:disabled) {
@@ -71,12 +74,12 @@
   border-right: 2px solid #FFFFFF;
   border-bottom: 2px solid #FFFFFF;
   box-shadow: inset 1px 1px #808080;
-  padding: 6px 21px 4px 23px;
+  padding: 5px 17px 3px 19px;
 }
 
 .xp-bevel-button:focus {
   outline: 1px dotted #000000;
-  outline-offset: -4px;
+  outline-offset: -3px;
 }
 
 .xp-bevel-button:disabled {
@@ -92,8 +95,8 @@
    ========================================================================== */
 .act1-recording-indicator {
   position: absolute;
-  top: 24px;
-  right: 32px;
+  top: 28px;
+  right: 36px;
   font-family: "SimSun", "NSimSun", monospace;
   font-size: 13px;
   color: #6a7078;
@@ -154,17 +157,20 @@
    ========================================================================== */
 .act3-window {
   position: absolute;
-  inset: 12px;
+  inset: 6px;
   display: flex;
   flex-direction: column;
   background-color: #ECE9D8;
   z-index: 50;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Classic XP Window Titlebar */
 .xp-titlebar {
-  height: 26px;
+  height: 24px;
+  min-height: 24px;
   background: linear-gradient(90deg, #0A246A 0%, #A6CAF0 100%);
   display: flex;
   align-items: center;
@@ -172,18 +178,19 @@
   padding: 0 4px 0 6px;
   color: #FFFFFF;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 11px;
+  flex-shrink: 0;
 }
 
 .xp-titlebar-left {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .xp-titlebar-icon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%23FFCC00" d="M8 1L2 4v5c0 4 6 6 6 6s6-2 6-6V4L8 1z"/><path fill="%23CC0000" d="M8 3L4 5v4c0 3 4 4.5 4 4.5s4-1.5 4-4.5V5L8 3z"/></svg>') no-repeat center;
 }
 
@@ -193,8 +200,8 @@
 }
 
 .xp-control-btn {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   background-color: #ECE9D8;
   border-top: 1px solid #FFF;
   border-left: 1px solid #FFF;
@@ -203,7 +210,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   color: #000;
   cursor: default;
@@ -217,32 +224,44 @@
 /* Dispatch Form Body */
 .act3-form-container {
   flex: 1;
-  padding: 14px 18px;
+  padding: 10px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 6px;
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 }
 
 .form-header-title {
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #000000;
   letter-spacing: 2px;
   border-bottom: 2px solid #808080;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+  flex-shrink: 0;
 }
 
 /* Form Table Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: 85px 1fr 85px 1fr;
-  gap: 6px 10px;
+  grid-template-columns: 72px 1fr 72px 1fr;
+  gap: 4px 10px;
   align-items: center;
-  font-size: 13px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.form-grid input,
+.form-row-split select,
+.form-row-split input {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-label {
@@ -250,6 +269,8 @@
   color: #000000;
   font-weight: normal;
   padding-right: 2px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .form-label.required::before {
@@ -261,8 +282,8 @@
   background-color: #E2DFD4;
   color: #2b2b2b;
   border: 1px solid #7F9DB9;
-  padding: 3px 6px;
-  font-size: 13px;
+  padding: 2px 6px;
+  font-size: 12px;
   height: 22px;
   box-sizing: border-box;
 }
@@ -271,8 +292,8 @@
   background-color: #D8D5CA;
   color: #777777;
   border: 1px solid #A0A0A0;
-  padding: 3px 6px;
-  font-size: 13px;
+  padding: 2px 6px;
+  font-size: 12px;
   height: 22px;
   box-sizing: border-box;
   text-align: center;
@@ -282,20 +303,22 @@
 .form-details-section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   flex: 1;
-  min-height: 100px;
+  min-height: 80px;
+  margin: 2px 0;
 }
 
 .form-textarea {
   flex: 1;
+  min-height: 70px;
   background-color: #FFFFFF;
   color: #000000;
   border: 1px solid #7F9DB9;
   padding: 6px 8px;
   font-family: "SimSun", "NSimSun", "宋体", monospace;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.45;
   resize: none;
   outline: none;
   box-sizing: border-box;
@@ -312,9 +335,10 @@
 /* Form Row Bottom */
 .form-row-split {
   display: grid;
-  grid-template-columns: 85px 1fr 85px 1fr;
-  gap: 6px 10px;
+  grid-template-columns: 72px 1fr 72px 1fr;
+  gap: 4px 10px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .form-select {
@@ -323,31 +347,20 @@
   border: 1px solid #7F9DB9;
   padding: 2px 4px;
   font-family: "SimSun", "NSimSun", sans-serif;
-  font-size: 13px;
-  height: 24px;
+  font-size: 12px;
+  height: 23px;
   outline: none;
   cursor: pointer;
-}
-
-.form-input-result {
-  background-color: #FFFFFF;
-  color: #000000;
-  border: 1px solid #7F9DB9;
-  padding: 3px 6px;
-  font-family: "SimSun", "NSimSun", sans-serif;
-  font-size: 13px;
-  height: 24px;
-  outline: none;
-  box-sizing: border-box;
 }
 
 /* Button Toolbar */
 .form-toolbar {
   display: flex;
   justify-content: flex-end;
-  gap: 14px;
-  padding-top: 8px;
+  gap: 12px;
+  padding-top: 6px;
   border-top: 1px solid #A0A0A0;
+  flex-shrink: 0;
 }
 
 /* All Fields Gray Readonly after submit */
@@ -360,22 +373,22 @@
   pointer-events: none !important;
 }
 
-/* Smart ABC Floating Bar - Relocated to top right area so it NEVER blocks buttons */
+/* Smart ABC Floating Bar - Top Right */
 .smart-abc-bar {
   position: absolute;
-  top: 36px;
-  right: 24px;
+  top: 30px;
+  right: 18px;
   background-color: #D4D0C8;
   border-top: 1px solid #FFFFFF;
   border-left: 1px solid #FFFFFF;
   border-right: 1px solid #808080;
   border-bottom: 1px solid #808080;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
-  padding: 2px 8px;
-  gap: 6px;
-  font-size: 12px;
+  padding: 2px 6px;
+  gap: 4px;
+  font-size: 11px;
   color: #000000;
   z-index: 60;
   pointer-events: none;
@@ -390,11 +403,11 @@
 .smart-abc-tag {
   background: #ECE9D8;
   border: 1px solid #808080;
-  padding: 1px 4px;
+  padding: 0 3px;
 }
 
 /* ==========================================================================
-   Act 4: Standby Screen Saver Clock (待机大钟 - Fullscreen)
+   Act 4: Standby Screen Saver Clock (In-Monitor Screensaver)
    ========================================================================== */
 .act4-screensaver {
   position: absolute;
@@ -421,8 +434,8 @@
 .act4-clock-display {
   font-family: "Courier New", "Lucida Console", monospace;
   font-weight: bold;
-  font-size: clamp(38px, 6vw, 76px);
-  letter-spacing: clamp(3px, 0.6vw, 8px);
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: 4px;
 }
 
 /* ==========================================================================
@@ -436,10 +449,12 @@
   justify-content: center;
   align-items: center;
   z-index: 80;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .act5-modal-window {
-  width: 85%;
+  width: 94%;
   max-width: 520px;
   background-color: #ECE9D8;
   border-top: 2px solid #FFFFFF;
@@ -450,6 +465,7 @@
   display: flex;
   flex-direction: column;
   animation: modalFadeIn 0.3s ease-out;
+  box-sizing: border-box;
 }
 
 @keyframes modalFadeIn {
@@ -458,13 +474,13 @@
 }
 
 .act5-notice-content {
-  padding: 18px 24px;
+  padding: 12px 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   font-family: "SimSun", "NSimSun", "宋体", serif;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.6;
   color: #000000;
   user-select: text;
   -webkit-user-select: text;
@@ -472,34 +488,34 @@
 
 .act5-notice-title {
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   letter-spacing: 2px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .act5-notice-body p {
-  margin: 6px 0;
+  margin: 4px 0;
   text-align: justify;
   text-indent: 2em;
 }
 
 .act5-notice-sign {
   text-align: right;
-  margin-top: 12px;
+  margin-top: 6px;
   font-weight: normal;
   letter-spacing: 1px;
 }
 
 /* Act 6: System Log Query Text */
 .act6-system-query {
-  margin-top: 10px;
-  padding-top: 10px;
+  margin-top: 6px;
+  padding-top: 6px;
   border-top: 1px dashed #A0A0A0;
   color: #606060;
   font-family: "SimSun", "Courier New", monospace;
   font-size: 12px;
-  line-height: 1.6;
+  line-height: 1.5;
   opacity: 0;
   transition: opacity 1.5s ease-in;
 }
@@ -512,7 +528,7 @@
 .act7-action-bar {
   display: flex;
   justify-content: center;
-  padding: 12px 0 16px 0;
+  padding: 8px 0 4px 0;
 }
 
 /* ==========================================================================
