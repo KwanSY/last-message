@@ -123,7 +123,7 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 2: 挂断与开机转场 (自然过渡到值班室 -> 电脑开机 -> 完整大表单)
+  // Act 2: 挂断与开机转场 (自然显现写实特写值班桌 -> 显示器通电开机 -> 完整登记单)
   // =========================================================================
   startAct2() {
     this.currentAct = 2;
@@ -133,9 +133,9 @@ class ModuleAController {
     this.clearMonitorScreen();
     this.screenEl.style.backgroundColor = '#000000';
 
-    // 2. Brief pause in quiet duty room
+    // 2. Brief 0.8s pause to take in the quiet midnight duty room
     setTimeout(() => {
-      // 3. CRT hardware turn-on simulation
+      // 3. CRT hardware turn-on simulation inside the Great Wall monitor
       window.soundEngine.playCRTTurnOn();
       this.renderAct3Form();
       this.screenEl.classList.add('crt-booting');
@@ -148,7 +148,7 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 3: 接警单 (核心交互幕 - 清晰完整呈现)
+  // Act 3: 接警单 (核心交互幕 - 左右双列完整清晰、提交按钮常驻)
   // =========================================================================
   renderAct3Form() {
     this.currentAct = 3;
@@ -169,15 +169,6 @@ class ModuleAController {
         </div>
 
         <div class="act3-form-container">
-          <!-- 2010 Smart ABC Floating IME Bar -->
-          <div class="smart-abc-bar font-system">
-            <span class="smart-abc-logo">ABC</span>
-            <span class="smart-abc-tag">标准</span>
-            <span class="smart-abc-tag">拼</span>
-            <span>半角</span>
-            <span style="color: #666;">[ 1. 2. 3. ]</span>
-          </div>
-
           <div class="form-header-title">110 接 处 警 登 记 单</div>
 
           <div class="form-grid font-system">
@@ -198,24 +189,40 @@ class ModuleAController {
           </div>
 
           <div class="form-details-section font-system">
-            <div class="form-label required" style="text-align: left; padding: 2px 0;">警情内容（接警记录描述）：</div>
+            <div class="form-label required" style="text-align: left; padding: 1px 0;">警情内容（接警记录描述）：</div>
             <textarea id="act3DetailText" class="form-textarea slow-cursor" placeholder="请输入接警简要内容..."></textarea>
           </div>
 
           <div class="form-row-split font-system">
             <div class="form-label required">警情分类：</div>
-            <select id="act3CategorySelect" class="form-select">
-              <option value="">-- 请选择分类 --</option>
-              ${form.categories.map(c => `<option value="${c}">${c}</option>`).join('')}
-            </select>
+            <div class="custom-xp-select-wrap">
+              <div id="act3CategoryTrigger" class="custom-xp-select-trigger">
+                <span id="act3CategoryVal" class="custom-xp-select-text">请选择分类</span>
+                <span class="custom-xp-select-arrow">▼</span>
+              </div>
+              <div id="act3DropdownMenu" class="custom-xp-dropdown-menu">
+                ${form.categories.map(c => `<div class="custom-xp-option" data-value="${c}">${c}</div>`).join('')}
+              </div>
+            </div>
 
             <div class="form-label">处理结果：</div>
-            <input type="text" id="act3ResultInput" class="form-input-locked font-system" value="" readonly tabindex="-1" placeholder="自动带出" />
+            <input type="text" id="act3ResultInput" class="form-input-locked font-system" value="" readonly tabindex="-1" />
           </div>
 
           <div class="form-toolbar">
-            <button id="act3ResetBtn" class="xp-bevel-button">重置</button>
-            <button id="act3SubmitBtn" class="xp-bevel-button" disabled>提交</button>
+            <!-- Smart ABC Status Bar Docked Cleanly at Bottom-Left (Zero Overlap) -->
+            <div class="smart-abc-docked font-system">
+              <span class="smart-abc-logo">ABC</span>
+              <span class="smart-abc-tag">标准</span>
+              <span class="smart-abc-tag">拼</span>
+              <span>半角</span>
+            </div>
+
+            <!-- Action Buttons at Bottom-Right -->
+            <div class="form-toolbar-buttons">
+              <button id="act3ResetBtn" class="xp-bevel-button">重置</button>
+              <button id="act3SubmitBtn" class="xp-bevel-button" disabled>提交</button>
+            </div>
           </div>
         </div>
       </div>
@@ -224,28 +231,47 @@ class ModuleAController {
 
   bindAct3Interactions() {
     const detailText = document.getElementById('act3DetailText');
-    const categorySelect = document.getElementById('act3CategorySelect');
+    const trigger = document.getElementById('act3CategoryTrigger');
+    const categoryVal = document.getElementById('act3CategoryVal');
+    const dropdownMenu = document.getElementById('act3DropdownMenu');
     const resultInput = document.getElementById('act3ResultInput');
     const submitBtn = document.getElementById('act3SubmitBtn');
     const resetBtn = document.getElementById('act3ResetBtn');
 
-    if (!detailText || !categorySelect) return;
+    if (!detailText || !trigger || !dropdownMenu) return;
 
     // Typing sound
     detailText.addEventListener('input', () => {
       window.soundEngine.playKeyClick();
     });
 
-    // Category change logic: Any selection automatically populates "无实质警情" (locked/read-only)
-    categorySelect.addEventListener('change', () => {
+    // Toggle custom XP dropdown
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
       window.soundEngine.playButtonClick();
-      const val = categorySelect.value;
-      if (val) {
-        submitBtn.disabled = false;
+      dropdownMenu.classList.toggle('open');
+    });
+
+    // Option selection
+    const options = dropdownMenu.querySelectorAll('.custom-xp-option');
+    options.forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.soundEngine.playButtonClick();
+        const val = opt.getAttribute('data-value');
+        categoryVal.textContent = val;
+        this.userCategory = val;
         resultInput.value = "无实质警情";
-      } else {
-        resultInput.value = "";
-        submitBtn.disabled = true;
+        this.userResult = "无实质警情";
+        submitBtn.disabled = false;
+        dropdownMenu.classList.remove('open');
+      });
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', () => {
+      if (dropdownMenu.classList.contains('open')) {
+        dropdownMenu.classList.remove('open');
       }
     });
 
@@ -253,23 +279,23 @@ class ModuleAController {
     resetBtn.addEventListener('click', () => {
       window.soundEngine.playButtonClick();
       detailText.value = '';
-      categorySelect.value = '';
+      categoryVal.textContent = '请选择分类';
+      this.userCategory = '';
       resultInput.value = '';
       submitBtn.disabled = true;
+      dropdownMenu.classList.remove('open');
     });
 
     // Submit button -> freeze form -> proceed to Act 4
     submitBtn.addEventListener('click', () => {
       window.soundEngine.playButtonClick();
-      this.userCategory = categorySelect.value || "咨询类";
-      this.userResult = "无实质警情";
+      dropdownMenu.classList.remove('open');
 
       // Freeze all fields into gray readonly
       document.querySelector('.act3-window').classList.add('form-submitted-locked');
       submitBtn.disabled = true;
       resetBtn.disabled = true;
       detailText.readOnly = true;
-      categorySelect.disabled = true;
 
       // Lingers briefly, then screen dims into in-monitor screensaver clock
       setTimeout(() => {
@@ -282,7 +308,7 @@ class ModuleAController {
   }
 
   // =========================================================================
-  // Act 4: 待机大屏跳秒 (~7s, 显示器内屏保)
+  // Act 4: 待机大屏跳秒 (~7s, 长城显示器内屏保)
   // =========================================================================
   startAct4() {
     this.currentAct = 4;
@@ -348,7 +374,7 @@ class ModuleAController {
               <div class="xp-control-btn close-disabled">✕</div>
             </div>
           </div>
-          <div style="flex:1; display:flex; justify-content:center; align-items:center; color:#666; font-size:12px;">
+          <div style="flex:1; display:flex; justify-content:center; align-items:center; color:#666; font-size:11px;">
             [ 系统已联机 · 等待指令 ]
           </div>
         </div>
@@ -403,7 +429,7 @@ class ModuleAController {
 
           <!-- Act 7: Action Button -->
           <div class="act7-action-bar">
-            <button id="act7GoBtn" class="xp-bevel-button font-system" style="font-weight: bold; padding: 4px 24px;">【出现场】</button>
+            <button id="act7GoBtn" class="xp-bevel-button font-system" style="font-weight: bold; padding: 3px 20px;">【出现场】</button>
           </div>
         </div>
       </div>

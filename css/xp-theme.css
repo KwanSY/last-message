@@ -6,8 +6,8 @@
 /* Font Definitions */
 .font-system {
   font-family: "SimSun", "NSimSun", "宋体", "Courier New", monospace;
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 11px;
+  line-height: 1.35;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
   font-smooth: never;
@@ -15,7 +15,7 @@
 
 .font-mono {
   font-family: "Courier New", "Lucida Console", "Consolas", "Fixedsys", monospace;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 .font-serif-cinematic {
@@ -31,10 +31,10 @@
 /* Common XP Bevel Borders */
 .xp-bevel-window {
   background-color: #ECE9D8;
-  border-top: 2px solid #FFFFFF;
-  border-left: 2px solid #FFFFFF;
-  border-right: 2px solid #404040;
-  border-bottom: 2px solid #404040;
+  border-top: 1px solid #FFFFFF;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
   box-shadow: inset -1px -1px #808080, inset 1px 1px #DFDFDF;
   box-sizing: border-box;
 }
@@ -51,14 +51,15 @@
 .xp-bevel-button {
   background-color: #ECE9D8;
   color: #000000;
-  border-top: 2px solid #FFFFFF;
-  border-left: 2px solid #FFFFFF;
-  border-right: 2px solid #404040;
-  border-bottom: 2px solid #404040;
+  border-top: 1px solid #FFFFFF;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
   box-shadow: inset 1px 1px #DFDFDF, inset -1px -1px #808080;
-  padding: 4px 18px;
+  padding: 2px 12px;
   font-family: "SimSun", "NSimSun", "宋体", sans-serif;
-  font-size: 13px;
+  font-size: 11px;
+  height: 20px;
   cursor: pointer;
   outline: none;
   user-select: none;
@@ -69,17 +70,17 @@
 }
 
 .xp-bevel-button:active:not(:disabled) {
-  border-top: 2px solid #404040;
-  border-left: 2px solid #404040;
-  border-right: 2px solid #FFFFFF;
-  border-bottom: 2px solid #FFFFFF;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+  border-right: 1px solid #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
   box-shadow: inset 1px 1px #808080;
-  padding: 5px 17px 3px 19px;
+  padding: 3px 11px 1px 13px;
 }
 
 .xp-bevel-button:focus {
   outline: 1px dotted #000000;
-  outline-offset: -3px;
+  outline-offset: -2px;
 }
 
 .xp-bevel-button:disabled {
@@ -157,20 +158,20 @@
    ========================================================================== */
 .act3-window {
   position: absolute;
-  inset: 6px;
+  inset: 1px;
   display: flex;
   flex-direction: column;
   background-color: #ECE9D8;
   z-index: 50;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   overflow: hidden;
 }
 
 /* Classic XP Window Titlebar */
 .xp-titlebar {
-  height: 24px;
-  min-height: 24px;
+  height: 20px;
+  min-height: 20px;
   background: linear-gradient(90deg, #0A246A 0%, #A6CAF0 100%);
   display: flex;
   align-items: center;
@@ -178,19 +179,19 @@
   padding: 0 4px 0 6px;
   color: #FFFFFF;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 10px;
   flex-shrink: 0;
 }
 
 .xp-titlebar-left {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .xp-titlebar-icon {
-  width: 13px;
-  height: 13px;
+  width: 11px;
+  height: 11px;
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%23FFCC00" d="M8 1L2 4v5c0 4 6 6 6 6s6-2 6-6V4L8 1z"/><path fill="%23CC0000" d="M8 3L4 5v4c0 3 4 4.5 4 4.5s4-1.5 4-4.5V5L8 3z"/></svg>') no-repeat center;
 }
 
@@ -200,8 +201,8 @@
 }
 
 .xp-control-btn {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   background-color: #ECE9D8;
   border-top: 1px solid #FFF;
   border-left: 1px solid #FFF;
@@ -210,7 +211,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 8.5px;
   font-weight: bold;
   color: #000;
   cursor: default;
@@ -224,11 +225,11 @@
 /* Dispatch Form Body */
 .act3-form-container {
   flex: 1;
-  padding: 10px 16px;
+  padding: 5px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 6px;
+  gap: 3px;
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
@@ -236,28 +237,29 @@
 
 .form-header-title {
   text-align: center;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
   color: #000000;
   letter-spacing: 2px;
-  border-bottom: 2px solid #808080;
-  padding-bottom: 4px;
-  margin-bottom: 2px;
+  border-bottom: 1px solid #808080;
+  padding-bottom: 2px;
+  margin-bottom: 1px;
   flex-shrink: 0;
 }
 
 /* Form Table Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: 72px 1fr 72px 1fr;
-  gap: 4px 10px;
+  grid-template-columns: 58px 1fr 58px 1fr;
+  gap: 2px 6px;
   align-items: center;
-  font-size: 12px;
+  font-size: 10.5px;
   flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-grid input,
-.form-row-split select,
 .form-row-split input {
   min-width: 0;
   width: 100%;
@@ -268,8 +270,8 @@
   text-align: right;
   color: #000000;
   font-weight: normal;
-  padding-right: 2px;
-  font-size: 12px;
+  padding-right: 1px;
+  font-size: 10.5px;
   white-space: nowrap;
 }
 
@@ -282,9 +284,9 @@
   background-color: #E2DFD4;
   color: #2b2b2b;
   border: 1px solid #7F9DB9;
-  padding: 2px 6px;
-  font-size: 12px;
-  height: 22px;
+  padding: 0 4px;
+  font-size: 10.5px;
+  height: 18px;
   box-sizing: border-box;
 }
 
@@ -292,9 +294,9 @@
   background-color: #D8D5CA;
   color: #777777;
   border: 1px solid #A0A0A0;
-  padding: 2px 6px;
-  font-size: 12px;
-  height: 22px;
+  padding: 0 4px;
+  font-size: 10.5px;
+  height: 18px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -303,25 +305,27 @@
 .form-details-section {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   flex: 1;
-  min-height: 80px;
-  margin: 2px 0;
+  min-height: 52px;
+  margin: 1px 0;
 }
 
 .form-textarea {
   flex: 1;
-  min-height: 70px;
+  min-height: 45px;
   background-color: #FFFFFF;
   color: #000000;
   border: 1px solid #7F9DB9;
-  padding: 6px 8px;
+  padding: 3px 5px;
   font-family: "SimSun", "NSimSun", "宋体", monospace;
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 10.5px;
+  line-height: 1.35;
   resize: none;
   outline: none;
   box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .form-textarea:focus {
@@ -335,63 +339,121 @@
 /* Form Row Bottom */
 .form-row-split {
   display: grid;
-  grid-template-columns: 72px 1fr 72px 1fr;
-  gap: 4px 10px;
+  grid-template-columns: 58px 1fr 58px 1fr;
+  gap: 2px 6px;
   align-items: center;
   flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
 }
 
-.form-select {
+/* Custom XP In-Screen Dropdown Component (Single Line Guarantee) */
+.custom-xp-select-wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.custom-xp-select-trigger {
+  height: 18px;
   background-color: #FFFFFF;
   color: #000000;
   border: 1px solid #7F9DB9;
-  padding: 2px 4px;
+  padding: 0 4px;
   font-family: "SimSun", "NSimSun", sans-serif;
-  font-size: 12px;
-  height: 23px;
-  outline: none;
+  font-size: 10.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-/* Button Toolbar */
+.custom-xp-select-trigger:hover {
+  border-color: #0054E3;
+}
+
+.custom-xp-select-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: left;
+}
+
+.custom-xp-select-arrow {
+  font-size: 7px;
+  color: #404040;
+  padding-left: 2px;
+  flex-shrink: 0;
+}
+
+.custom-xp-dropdown-menu {
+  position: absolute;
+  bottom: 20px; /* Pops UPWARD into empty form area, never overflow bottom */
+  left: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #7F9DB9;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.custom-xp-dropdown-menu.open {
+  display: flex;
+}
+
+.custom-xp-option {
+  padding: 2px 5px;
+  font-size: 10.5px;
+  color: #000000;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.custom-xp-option:hover {
+  background-color: #0A246A;
+  color: #FFFFFF;
+}
+
+/* Button Toolbar (Docked Smart ABC on left, Actions on right) */
 .form-toolbar {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 6px;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2px;
   border-top: 1px solid #A0A0A0;
   flex-shrink: 0;
 }
 
-/* All Fields Gray Readonly after submit */
-.form-submitted-locked input,
-.form-submitted-locked textarea,
-.form-submitted-locked select {
-  background-color: #E2DFD4 !important;
-  color: #555555 !important;
-  border-color: #A0A0A0 !important;
-  pointer-events: none !important;
+.form-toolbar-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-/* Smart ABC Floating Bar - Top Right */
-.smart-abc-bar {
-  position: absolute;
-  top: 30px;
-  right: 18px;
+/* Smart ABC Floating Bar - Docked cleanly in Bottom-Left Toolbar */
+.smart-abc-docked {
   background-color: #D4D0C8;
   border-top: 1px solid #FFFFFF;
   border-left: 1px solid #FFFFFF;
   border-right: 1px solid #808080;
   border-bottom: 1px solid #808080;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
-  display: flex;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  display: inline-flex;
   align-items: center;
-  padding: 2px 6px;
-  gap: 4px;
-  font-size: 11px;
+  padding: 0 4px;
+  gap: 3px;
+  font-size: 9px;
   color: #000000;
-  z-index: 60;
-  pointer-events: none;
+  height: 16px;
+  user-select: none;
 }
 
 .smart-abc-logo {
@@ -403,7 +465,17 @@
 .smart-abc-tag {
   background: #ECE9D8;
   border: 1px solid #808080;
-  padding: 0 3px;
+  padding: 0 2px;
+}
+
+/* All Fields Gray Readonly after submit */
+.form-submitted-locked input,
+.form-submitted-locked textarea,
+.form-submitted-locked .custom-xp-select-trigger {
+  background-color: #E2DFD4 !important;
+  color: #555555 !important;
+  border-color: #A0A0A0 !important;
+  pointer-events: none !important;
 }
 
 /* ==========================================================================
@@ -434,8 +506,8 @@
 .act4-clock-display {
   font-family: "Courier New", "Lucida Console", monospace;
   font-weight: bold;
-  font-size: clamp(28px, 4vw, 38px);
-  letter-spacing: 4px;
+  font-size: 22px;
+  letter-spacing: 3px;
 }
 
 /* ==========================================================================
@@ -449,18 +521,18 @@
   justify-content: center;
   align-items: center;
   z-index: 80;
-  padding: 10px;
+  padding: 4px;
   box-sizing: border-box;
 }
 
 .act5-modal-window {
-  width: 94%;
-  max-width: 520px;
+  width: 96%;
+  max-width: 360px;
   background-color: #ECE9D8;
-  border-top: 2px solid #FFFFFF;
-  border-left: 2px solid #FFFFFF;
-  border-right: 2px solid #404040;
-  border-bottom: 2px solid #404040;
+  border-top: 1px solid #FFFFFF;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
@@ -474,13 +546,13 @@
 }
 
 .act5-notice-content {
-  padding: 12px 18px;
+  padding: 6px 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 3px;
   font-family: "SimSun", "NSimSun", "宋体", serif;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 10.5px;
+  line-height: 1.4;
   color: #000000;
   user-select: text;
   -webkit-user-select: text;
@@ -488,34 +560,34 @@
 
 .act5-notice-title {
   text-align: center;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
-  letter-spacing: 2px;
-  margin-bottom: 2px;
+  letter-spacing: 1.5px;
+  margin-bottom: 1px;
 }
 
 .act5-notice-body p {
-  margin: 4px 0;
+  margin: 2px 0;
   text-align: justify;
   text-indent: 2em;
 }
 
 .act5-notice-sign {
   text-align: right;
-  margin-top: 6px;
+  margin-top: 3px;
   font-weight: normal;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 /* Act 6: System Log Query Text */
 .act6-system-query {
-  margin-top: 6px;
-  padding-top: 6px;
+  margin-top: 3px;
+  padding-top: 3px;
   border-top: 1px dashed #A0A0A0;
   color: #606060;
   font-family: "SimSun", "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 9.5px;
+  line-height: 1.35;
   opacity: 0;
   transition: opacity 1.5s ease-in;
 }
@@ -528,7 +600,7 @@
 .act7-action-bar {
   display: flex;
   justify-content: center;
-  padding: 8px 0 4px 0;
+  padding: 3px 0 2px 0;
 }
 
 /* ==========================================================================
