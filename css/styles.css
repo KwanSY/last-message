@@ -1,0 +1,41 @@
+/* Base HTML and Canvas Container Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #030406;
+  overflow: hidden;
+}
+
+/* User interaction overlay to unlock Web Audio context on initial user click if needed */
+.audio-init-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+.audio-init-overlay.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+/* Audio Hint (Extremely unobtrusive) */
+.audio-hint {
+  font-family: "SimSun", monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  pointer-events: none;
+}
